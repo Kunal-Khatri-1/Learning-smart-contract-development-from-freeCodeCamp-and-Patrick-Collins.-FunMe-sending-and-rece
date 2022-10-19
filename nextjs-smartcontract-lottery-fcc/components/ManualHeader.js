@@ -11,7 +11,8 @@ export default function Header() {
     // ton more variables here => https://www.npmjs.com/package/react-moralis#usemoralis
 
     // using account and not isWeb3Enabled because maybe web3isEnabled but account is not connected
-    const { enableWeb3, account, isWeb3Enabled, Moralis, deactivateWeb3 } = useMoralis()
+    const { enableWeb3, account, isWeb3Enabled, Moralis, deactivateWeb3, isWeb3EnableLoading } =
+        useMoralis()
 
     // StrictMode renders components twice (on dev but not production) in order to detect any problems with your code and warn you about them (which can be quite useful).
     // when page is refreshed entire component is rerendered and account and isWeb3Enabled is initialized to default fasly values
@@ -64,6 +65,8 @@ export default function Header() {
                             window.localStorage.setItem("connected", "injected")
                         }
                     }}
+                    // isWeb3EnableLoading checks if metamask is popped up
+                    disabled={isWeb3EnableLoading}
                 >
                     Connect
                 </button>
