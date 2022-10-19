@@ -15,3 +15,6 @@ all the dependencies that are useful for the developer are added with --dev
 while all the dependencies used by the website to function is NOT marked with --dev
 dev dependencies goes to devDependencies in package.json => ignore these dependencies
 while dependencies used by the website/ project goes to dependencies in package.json => these are the ones that bundle up together for the front-end
+
+
+yarn add web3uikit

@@ -6,6 +6,8 @@ export default function Header() {
     // way to keep track of state in application
 
     // enableWeb3 is equivalent of await ethereum.request({method: "eth_requestAccounts"})
+    // If you need features from an enabled web3 instance, then you need to enable web3 first. By default, metamask will be used to get a provider:
+    // If wan to connect to a different web3provider then, enableWeb3({provider: 'walletconnect'})
     // isWeb3Enabled => wether or not metamask is connected
     // account => address of the connected Web3 wallet
     // ton more variables here => https://www.npmjs.com/package/react-moralis#usemoralis
