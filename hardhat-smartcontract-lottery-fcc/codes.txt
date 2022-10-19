@@ -1,0 +1,48 @@
+yarn add --dev hardhat
+// creating an empty hardhat.config.js
+yarn hardhat
+// add all the dependencies
+yarn add --dev @nomiclabs/hardhat-ethers@npm:hardhat-deploy-ethers ethers @nomiclabs/hardhat-etherscan @nomiclabs/hardhat-waffle chai ethereum-waffle hardhat hardhat-contract-sizer hardhat-deploy hardhat-gas-reporter prettier prettier-plugin-solidity solhint solidity-coverage dotenv
+
+
+// Events
+        // Logs and Events are often used synonymously
+        // whenever we update the dynamic object like array or mapping we always want to emit an event
+        // EVM has a logging functionality
+        // when things happen on a blockchain, EVM writes these to a spceific Data Structure called Logs
+        // if connect/run a node, can call ethGetLogs call to get the logs
+        // Logs have important logging called Events
+        // Events allows to "print" information to this logging structure in a way that is more efficient than storing it in a storage variable
+        // Events and Logs live in Data Structure that is not accessible to smart contracts
+        // Events allows us to print some information without having to save it in a storage variable
+        // each event is tied to the smart contract or account address that emitted the event
+        // a chinLink node is listening for request data events for it to get a random number, make API call, etc
+        // sometimes there are many events, we need to index them, query all the events happened at a later data => Graph listens and stores these events in a graph for the same
+        // when we emit events there are two kinds of parameters => indexed and non-indexed
+        // can have upto 3 indexed parameters, indexed parameters are also known as topics
+        // Indexed parameters are easier to query/search for
+        // non indexed are harder to search because they get ABI encoded and have to know the ABI to decode them
+        // non indexed => took the parameters, matched them together with their ABI, pumped them through a encoding algorithm
+        // if you have ABI then non indexed are easy to decode otherwise very hard to decode
+        // non-indexed => cost less gas to pump into the logs
+        // Event Log => address from where the event was emitted, Topics, Data = ABI encoded non indexed parameters of the event
+
+// downloading chainLink contract to import chainLink VRF V2 contract
+yarn add --dev @chainlink/contracts
+npm install @chainlink/contrats
+
+// hardhat shorthand and autocomplete
+// insted of doing hardhat compile do hh compile
+// resolve the issue of html help popping up
+yarn global add hardhat-shorthand
+
+// always unit test code before deploying it on testnet
+
+
+
+// Staging test on testnet (vrf.chain.link)(keepers.chain.link)
+// 1. Get our SubId for Chainlink VRF and create and fund subscritpion (subscription is funded to pay the oracale gas to get our random numbers)
+// 2. Deploy our contract using SubId
+// 3. Register the contract with Chainlink VRF and it's subId
+// 4. Register the contract with Chainlink Keepers
+// 5. Run staging tests
