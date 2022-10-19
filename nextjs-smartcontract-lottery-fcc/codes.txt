@@ -1,0 +1,17 @@
+// . => dont create a new folder
+yarn create next-app .
+
+yarn run dev
+
+_app.js is the main entry point for all the components
+it will render different pages
+
+index.js is the default page
+
+// add moralis
+yarn add moralis react-moralis
+
+all the dependencies that are useful for the developer are added with --dev
+while all the dependencies used by the website to function is NOT marked with --dev
+dev dependencies goes to devDependencies in package.json => ignore these dependencies
+while dependencies used by the website/ project goes to dependencies in package.json => these are the ones that bundle up together for the front-end
