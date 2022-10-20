@@ -21,3 +21,9 @@ yarn add web3uikit
 
 // to mock getting random number and selecting a winner
 yarn hardhat run .\scripts\mockOffchain.js --network localhost
+
+// adding tailwindCSS for Nextjs
+yarn add --dev tailwindcss postcss autoprefixer
+
+// gives postcss.config.js and tailwind.config.js
+yarn tailwindcss init -p
