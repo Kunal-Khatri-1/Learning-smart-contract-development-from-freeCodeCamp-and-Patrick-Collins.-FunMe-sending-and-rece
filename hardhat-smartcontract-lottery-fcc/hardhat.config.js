@@ -25,6 +25,9 @@ module.exports = {
             url: GOERLI_RPC_URL,
             accounts: [PRIVATE_KEY],
         },
+        localhost: {
+            chainId: 31337,
+        },
     },
     gasReporter: {
         enabled: false,

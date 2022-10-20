@@ -1,14 +1,26 @@
 const { ethers, network } = require("hardhat")
 
 async function mockKeepers() {
+    console.log("chainId", network.config.chainId)
     const raffle = await ethers.getContract("Raffle")
+    console.log(`Raffle ${raffle.address}`)
+    let raffleState = await raffle.getRaffleState()
+    if (raffleState === 1) {
+        raffleState = "calculating"
+    } else {
+        raffleState = "open"
+    }
+    console.log(`raffleState: ${raffleState}`)
     const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
+    console.log(`checkData: ${checkData}`)
     const { upkeepNeeded } = await raffle.callStatic.checkUpkeep(checkData)
+    console.log("UpkeedpNeeded: ", upkeepNeeded)
     if (upkeepNeeded) {
         const tx = await raffle.performUpkeep(checkData)
         const txReceipt = await tx.wait(1)
         const requestId = txReceipt.events[1].args.requestId
         console.log(`Performed upkeep with RequestId: ${requestId}`)
+        console.log("chainId", network.config.chainId)
         if (network.config.chainId == 31337) {
             await mockVrf(requestId, raffle)
         }

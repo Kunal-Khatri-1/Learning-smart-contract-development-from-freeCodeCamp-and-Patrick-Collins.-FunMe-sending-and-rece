@@ -1,5 +1,6 @@
 import "../styles/globals.css"
 import { MoralisProvider } from "react-moralis"
+import { NotificationProvider } from "web3uikit"
 
 function MyApp({ Component, pageProps }) {
     // in order to use moralis entire application needs to be wrapped around a Moralis provider
@@ -7,7 +8,9 @@ function MyApp({ Component, pageProps }) {
     return (
         // initialzeOnMount => to hook into a server
         <MoralisProvider initializeOnMount={false}>
-            <Component {...pageProps} />
+            <NotificationProvider>
+                <Component {...pageProps} />
+            </NotificationProvider>
         </MoralisProvider>
     )
 }

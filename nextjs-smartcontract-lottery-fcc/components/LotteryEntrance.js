@@ -5,6 +5,8 @@ import { contractAddresses, abi } from "../constants"
 import { useMoralis, useWeb3Contract } from "react-moralis"
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
+// this gives a dispatch function
+import { Info, useNotification } from "web3uikit"
 
 export default function LotteryEntrance() {
     // reason why moralis knows which chain we are on is because
@@ -13,14 +15,16 @@ export default function LotteryEntrance() {
     // this gives the hex version of the chainId
     // const {chainId} = useMoralis()
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis()
-
     const chainId = parseInt(chainIdHex)
-
     const raffleAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
-
     // making entranceFee global
     // why making a state expained in useEffect
     const [entranceFee, setEntranceFee] = useState("0")
+    const [numPlayers, setNumPlayers] = useState("0")
+    const [recentWinner, setRecentWinner] = useState("0")
+
+    // dispatch is a little popup we will get
+    const dispatch = useNotification()
 
     // runContractFunction can both send transaction and read state
     // all the variables => data, error, runContractFunction, isFetching, isLoading
@@ -39,6 +43,20 @@ export default function LotteryEntrance() {
         params: {},
     })
 
+    const { runContractFunction: getNumberOfPlayers } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress, // specify the networkId
+        functionName: "getNumberOfPlayers",
+        params: {},
+    })
+
+    const { runContractFunction: getRecentWinner } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress, // specify the networkId
+        functionName: "getRecentWinner",
+        params: {},
+    })
+
     async function updateUIValues() {
         // const entranceFee = (await getEntranceFee()).toString()
         // console.log(entranceFee)
@@ -46,7 +64,12 @@ export default function LotteryEntrance() {
         // but the browser didn't re-render when the value of the entranceFee changed => browser showing blank while it displays value on the console
         // To re-render the browser when the entranceFee changes => useState() Hook
         const entranceFeeFromCall = (await getEntranceFee()).toString()
+        const numPlayersFromCall = (await getNumberOfPlayers()).toString()
+        const recentWinnerFromCall = (await getRecentWinner()).toString()
+
         setEntranceFee(entranceFeeFromCall)
+        setNumPlayers(numPlayersFromCall)
+        setRecentWinner(recentWinnerFromCall)
 
         // may see 0 in the console => setEntranceFee has not stopped running
         console.log(entranceFee)
@@ -76,15 +99,48 @@ export default function LotteryEntrance() {
         }
     }, [isWeb3Enabled])
 
+    // why split handleSuccess and HandleNotification into two?
+    const handleSuccess = async function (tx) {
+        // wait for the transaction to go through
+        await tx.wait(1)
+        handleNewNotification(tx)
+        // this is required because otherwise given wallet is connected, if another player enters the raffle setNumPlayers and setRecentWinners will not be called because isWeb3Enabled didn't change and we'll have to reload to see the changes reflected on the screen
+        // so by adding updateUIValues here => call the setNumPlayers and setRecentWinners and re-render whenever there is any sucessful transaction
+        updateUIValues()
+    }
+
+    const handleNewNotification = function (tx) {
+        dispatch({
+            type: "info",
+            message: "Transaction Complete!",
+            title: "Transaction Notification",
+            position: "topR",
+            icon: "bell",
+        })
+    }
+
     return (
         <div>
             Hi from Lottery Entrance.
             {/* making sure that can only call the function so long as there is a Raffle address */}
             {raffleAddress ? (
                 <>
-                    <button onClick={async () => await enterRaffle({})}>Enter Raffle</button>
+                    <button
+                        onClick={async () =>
+                            await enterRaffle({
+                                onSuccess: handleSuccess,
+                                onError: (error) => console.log(error),
+                                // onComplete:,
+                                // onError:,
+                            })
+                        }
+                    >
+                        Enter Raffle
+                    </button>
                     {/* Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")}ETH */}
                     <div>Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH</div>
+                    Players: {numPlayers}
+                    recentWinner: {recentWinner}
                 </>
             ) : (
                 <div>Please connect to a supported chain </div>
