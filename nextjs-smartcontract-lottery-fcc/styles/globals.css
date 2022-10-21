@@ -6,14 +6,10 @@
 
 body {
     background: linear-gradient(90deg, #3cc4fa, #fc35f6);
-    background-size: 100% 100%;
-    animation: gradient 4s ease infinite reverse;
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite reverse;
     height: 100vh;
     color: white;
-}
-
-.Home_container__bCOhY {
-    padding: 0px;
 }
 
 @keyframes gradient {

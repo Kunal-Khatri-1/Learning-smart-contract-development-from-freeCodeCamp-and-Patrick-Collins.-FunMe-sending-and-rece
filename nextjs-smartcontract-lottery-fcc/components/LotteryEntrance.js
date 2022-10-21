@@ -128,7 +128,7 @@ export default function LotteryEntrance() {
     return (
         <div>
             {/* making sure that can only call the function so long as there is a Raffle address */}
-            <div className="w-screen py-20 flex flex-row justify-center items-center">
+            <div className=" py-20 flex flex-row justify-center items-center">
                 <div className=" py-10 px-6 max-w-xl w-4/5 bg-black/[0.7] rounded-lg shadow-lg">
                     <h1 className=" w-full text-5xl mt-auto text-center">Welcome to Dlottery</h1>
                     <div className="w-ful">

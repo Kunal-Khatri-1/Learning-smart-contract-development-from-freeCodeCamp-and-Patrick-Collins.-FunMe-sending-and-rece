@@ -27,3 +27,18 @@ yarn add --dev tailwindcss postcss autoprefixer
 
 // gives postcss.config.js and tailwind.config.js
 yarn tailwindcss init -p
+
+// access file in IPFS
+ipfs://<CID>
+
+// access indirectly through grateway
+https://ipfs.io/ipfs/<CID>
+
+// IPFS does not have any ability to run any code it just hosts the code
+// if front-end has any server stuff it won't work
+
+// IPFS can't do yarn dev. We need to put all our code into static equivalents to do that we use
+yarn build
+
+// gives new folder called out => containing pure static code that we can use on IPFS
+yarn next export

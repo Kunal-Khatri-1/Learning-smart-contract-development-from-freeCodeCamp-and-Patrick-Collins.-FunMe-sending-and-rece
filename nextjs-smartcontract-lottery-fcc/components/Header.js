@@ -1,6 +1,4 @@
 import { ConnectButton } from "web3uikit"
-import Image from "next/image"
-import headerImage from "../public/images/Header-ticket-icon.png"
 import Link from "next/link"
 
 export default function Header() {
@@ -8,8 +6,7 @@ export default function Header() {
         <div className=" border-b-2 p-5 flex flex-row items-center">
             {/* moralisAuth = false => not going to connect to a server */}
             <Link href="/">
-                <a className="headingWrapper flex flex-row items-center cursor-pointer">
-                    <Image src={headerImage} alt="Icon" height="40" width="40" />
+                <a>
                     <h1 className=" py-4 px-4 font-bold text-3xl font-sans drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]">
                         Dlottery
                     </h1>
