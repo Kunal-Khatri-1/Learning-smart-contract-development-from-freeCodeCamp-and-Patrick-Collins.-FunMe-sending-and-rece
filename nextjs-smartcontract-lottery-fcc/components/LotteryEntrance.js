@@ -158,7 +158,9 @@ export default function LotteryEntrance() {
 
                                 <div className="buttonWrapper flex flex-row justify-center">
                                     <button
-                                        className=" cursor-pointer rounded-md px-20 py-3 mt-10 text-xl font-bold text-gray-900 bg-white hover:scale-y-105 transition-all w-full"
+                                        className={`cursor-pointer rounded-md px-20 py-3 mt-10 text-xl font-bold text-gray-900 hover:scale-y-105 transition-all w-full ${
+                                            isLoading || isFetching ? " bg-gray-500" : "bg-white"
+                                        }`}
                                         onClick={async () =>
                                             await enterRaffle({
                                                 // onSuccess is'nt checking that the transaction has a block confirmation
@@ -173,7 +175,7 @@ export default function LotteryEntrance() {
                                         disabled={isLoading || isFetching}
                                     >
                                         {isLoading || isFetching ? (
-                                            <div className=" animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
+                                            <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full mx-auto"></div>
                                         ) : (
                                             <div>Enter Raffle</div>
                                         )}
