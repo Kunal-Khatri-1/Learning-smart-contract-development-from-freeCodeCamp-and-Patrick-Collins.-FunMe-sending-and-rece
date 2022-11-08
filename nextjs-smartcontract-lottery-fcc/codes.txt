@@ -42,3 +42,5 @@ yarn build
 
 // gives new folder called out => containing pure static code that we can use on IPFS
 yarn next export
+
+// filecoin
